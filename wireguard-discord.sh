@@ -16,6 +16,7 @@ fi
 NOW=$(date +%s)
 CURRENT_PATH=$(pwd)
 CLIENTS_DIRECTORY="$CURRENT_PATH/clients"
+PEERS_FILE="$CURRENT_PATH/peers"
 TIMEOUT="3" # after X minutes the clients will be considered disconnected
 WEBHOOK="" # Place your Discord Webhook URL here
 WIREGUARD_CLIENTS=$(wg show wg0 dump | tail -n +2) # remove first line from list
@@ -31,9 +32,17 @@ while IFS= read -r LINE; do
         public_key=$(awk '{ print $1 }' <<< "$LINE")
         remote_ip=$(awk '{ print $3 }' <<< "$LINE" | awk -F':' '{print $1}')
         last_seen=$(awk '{ print $5 }' <<< "$LINE")
+        
         # By default, the client name is just the sanitized public key containing only letters and numbers.
         client_name=$(echo "$public_key" | sed 's/[^a-zA-Z0-9]//g')
-        friendly_name=$(grep "$public_key" /etc/wireguard/peers | cut -d ':' -f 2)
+
+        # check the peers file if it does not exist.
+        if [ ! -f "$PEERS_FILE" ]; then
+                echo "No peers file found. Falling back to pub key"
+        else
+                friendly_name=$(grep "$public_key" $PEERS_FILE | cut -d ':' -f 2)
+        fi
+       
         # check if the wireguard directory keys exists (created by pivpn)
         if [ -d "/etc/wireguard/keys/" ]; then
                 # if the public_key is stored in the /etc/wireguard/keys/username_pub file, save the username in the client_name var
