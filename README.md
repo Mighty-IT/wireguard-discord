@@ -28,3 +28,12 @@ bQg8zIRXJcöoaish/aslkbc+asc0Lz4rjyf5SQpNn3Q=:Client-02
 ```
 
 ![image](https://github.com/user-attachments/assets/1dd529fc-673f-4032-95c9-94c499f522c9)
+
+
+
+
+
+
+----------
+Most of the script is from ❤️ https://github.com/alfiosalanitri/wireguard-client-connection-notification ❤️. 
+So props out to him. I just want to use discord webhooks so i modified and removed some parts of it.
