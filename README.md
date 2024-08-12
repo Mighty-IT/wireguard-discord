@@ -1,5 +1,5 @@
 # wireguard-discord
-Discord Notifications for connecting and disconnecting clients poor mans monitoring.
+Discord Notifications for connecting and disconnecting clients aka. poor mans monitoring.
 By default it will run every minute the check. When the last handshake is older than three minutes, the host will be marked as disconnected.
 Feel free to modify the timeout in the script.
 
